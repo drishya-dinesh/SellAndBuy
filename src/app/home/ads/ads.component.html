@@ -1,0 +1,11 @@
+<div class="ads-container">
+    <div class="search-container">
+        <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
+            <input type="text" nz-input placeholder="Find your items" />
+        </nz-input-group>
+        <ng-template #suffixButton>
+            <button nz-button nzType="primary" nzSize="large" nzSearch>Search</button>
+        </ng-template>
+    </div>
+    <app-ads-list [ads]="allAds"></app-ads-list>
+</div>

@@ -1,0 +1,45 @@
+.side-bar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 80px;
+    background: linear-gradient(180deg, #1a1628 -2%, #2f2c3c 110%);
+    padding-top: 10px;
+    padding-bottom: 30px;
+
+    .logo {
+        img {
+            height: 50px;
+        }
+    }
+
+    .nav-bar-items {
+        margin-top: 30px;
+
+        .nav-item {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            cursor: pointer;
+
+            img {
+                height: 30px;
+            }
+
+            .label {
+                color: #ffffff;
+                font-size: 12px;
+                font-weight: 600;
+                padding-top: 5px;
+            }
+        }
+
+        .nav-item.active {
+            background: #454250ff
+        }
+        .nav-item:hover {
+            background: #454250ff
+        }
+
+    }
+}

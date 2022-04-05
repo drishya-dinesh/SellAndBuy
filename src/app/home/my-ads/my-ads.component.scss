@@ -1,0 +1,55 @@
+.myads-container {
+    .post-add {
+        border: 1px solid #dedede;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+
+        button {
+            margin-right: 10px;
+        }
+    }
+}
+
+.ad-modal {}
+
+::ng-deep {
+    .nt-select-selector {
+        width: 100%;
+    }
+
+    .ant-select {
+        width: 100%;
+    }
+
+    .ant-select-selector {
+        height: 40px !important;
+    }
+
+
+    .preview-image {
+        max-width: 200px;
+        max-height: 200px;
+        height: 200px;
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
+
+    .ad-modal {
+        input {
+            height: 40px;
+        }
+
+        button {
+            height: 40px;
+        }
+    }
+}
+
+.footer-button {
+    height: 40px;
+    font-size: 16px;
+}

@@ -1,0 +1,55 @@
+<div class="row chat-container">
+    <div class="col-sm-6 col-md-4 col-xl-4">
+        <div class="people">
+            <div class="header">
+                People
+            </div>
+            <div class="list">
+                <ng-container *ngFor="let people of chatList; let i=index">
+                    <div class="item" [ngClass]="{'selected':selectedChatIndex===i}" (click)="selectChat(i)">
+                        <img src="assets/images/user.svg">
+                        <div class="details">
+                            <div class="product">{{people.name}}</div>
+                            <div class="person">{{people.createdBy}}</div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-6 col-xl-6">
+        <div class="chat">
+            <div class="header">
+                Chats
+            </div>
+            <ng-container *ngIf="selectedChatIndex>-1">
+                <div class="messages">
+                    <ng-container *ngFor="let message of chatList[selectedChatIndex].chats">
+                        <div *ngIf="message.type==='seller'" class="d-flex justify-content-start">
+                            <span class="message-bubble seller">
+                                {{message.message}}
+                            </span>
+                        </div>
+                        <div *ngIf="message.type==='buyer'" class="d-flex justify-content-end">
+                            <span class="message-bubble buyer">
+                                {{message.message}}
+                            </span>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="align-items-end d-flex send-section">
+                    <div class="input w-100">
+                        <textarea nz-input placeholder="Message Seller" [(ngModel)]="inputMessage"
+                            [nzAutosize]="{ minRows: 3, maxRows: 3 }"></textarea>
+                    </div>
+                    <button nz-button nzType="primary" nzSize="large" (click)="sendMessage()">
+                        <div class="d-flex justify-content-around align-items-center">
+                            Send &nbsp;
+                            <i nz-icon nzType="send" nzTheme="outline"></i>
+                        </div>
+                    </button>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

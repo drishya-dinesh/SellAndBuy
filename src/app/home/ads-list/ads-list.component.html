@@ -1,0 +1,28 @@
+<div class="ads row">
+    <ng-container *ngFor="let ad of ads">
+        <div class="col-sm-12 col-md-6 col-xl-4">
+            <div class="ad">
+                <div class="image">
+                    <img [src]="ad.image||'assets/images/sample.jpg'">
+                </div>
+                <div class="details">
+                    <div class="sub">
+                        <div class="price">
+                            ${{ad.price | number}}
+                        </div>
+                        <div class="name">
+                            {{ad.name}}
+                        </div>
+                        <div class="description">
+                            {{ad.description}}
+                        </div>
+                        <div class="meta d-flex justify-content-between">
+                            <div>{{ad.location}}</div>
+                            <div>{{ad.date | dateAgo}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>

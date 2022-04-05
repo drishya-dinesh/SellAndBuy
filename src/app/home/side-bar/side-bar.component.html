@@ -1,0 +1,14 @@
+<div class="side-bar d-flex flex-column align-items-center">
+    <div class="logo">
+        <img src="assets/images/logo.png">
+    </div>
+    <div class="nav-bar-items w-100">
+        <ng-container *ngFor="let item of sideBarItems">
+            <div class="align-items-center d-flex flex-column nav-item" [ngClass]="{'active':isRouteActive(item.route)}"
+                (click)="navigateToRoute(item.route)">
+                <img src="assets/images/{{item.icon}}">
+                <div class="label">{{item.text}}</div>
+            </div>
+        </ng-container>
+    </div>
+</div>

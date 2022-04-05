@@ -1,0 +1,55 @@
+<div class="myads-container">
+    <div class="post-add">
+        <button nz-button [nzSize]="'large'" nzType="primary" (click)="openPostAd()">Post Your Ad.</button>
+        Helps you to post your ads in the universe.
+    </div>
+    <app-ads-list [ads]="myAds"></app-ads-list>
+</div>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Post Your Ad." (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
+    [nzStyle]="{width:'800px'}">
+    <ng-container *nzModalContent>
+        <div class="row ad-modal">
+            <div class="col-sm-12 col-md-12 col-xl-6 form-group">
+                <input nz-input placeholder="Product Name" [(ngModel)]="postAd.name" />
+            </div>
+            <div class="col-sm-12 col-md-12 col-xl-8 form-group">
+                <textarea nz-input placeholder="Product description" [nzAutosize]="{ minRows: 3, maxRows: 3 }"
+                    [(ngModel)]="postAd.description">
+                </textarea>
+            </div>
+            <div class="col-sm-12 col-md-12 col-xl-6 form-group">
+                <input type="number" nz-input placeholder="Price" [(ngModel)]="postAd.price" />
+            </div>
+            <div class="col-sm-12 col-md-12 col-xl-6 form-group">
+                <nz-select nzPlaceHolder="Select Category" [(ngModel)]="postAd.category">
+                    <ng-container *ngFor="let item of categoryList">
+                        <nz-option [nzLabel]="item" [nzValue]="item"></nz-option>
+                    </ng-container>
+                </nz-select>
+            </div>
+            <div class="col-sm-12 col-md-12 col-xl-6 form-group">
+                <nz-select nzPlaceHolder="Select Location" [(ngModel)]="postAd.location">
+                    <ng-container *ngFor="let item of locationList">
+                        <nz-option [nzLabel]="item" [nzValue]="item"></nz-option>
+                    </ng-container>
+                </nz-select>
+            </div>
+            <div class="col-sm-12 col-md-12 col-xl-8 form-group d-flex align-items-center">
+                <input nz-input type="file"  accept="image/png, image/jpeg, image/png"  placeholder="Select Image" [(ngModel)]="selectedImage"
+                    (change)="onImageSelect($event)" />
+                <a *ngIf="postAd.image" nz-button nzType="link" nz-popover nzPopoverTrigger="click"
+                    [nzPopoverContent]="preview">Preview</a>
+                <ng-template #preview>
+                    <div class="preview-image">
+                        <img [src]="postAd.image" alt="Preview">
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </ng-container>
+    <div *nzModalFooter>
+        <button nz-button class="footer-button" nzType="default" (click)="handleCancel()">Cancel</button>
+        <button nz-button class="footer-button" nzType="primary" (click)="handleOk()" [disabled]="isFormInvalid">Post</button>
+    </div>
+</nz-modal>
