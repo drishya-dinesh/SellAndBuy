@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FireBaseService } from 'src/app/services/fire-base.service';
+import { COLLECTIONS } from '../app-constants';
 
 @Component({
   selector: 'app-ads',
@@ -7,87 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdsComponent implements OnInit {
 
-  allAds = [
-    {
-      name: 'Product Name',
-      id:'ea12',
-      description: 'this product is in awesome condition',
-      price: 320,
-      image: '',
-      location: 'Scarborough',
-      date: 'Sat Apr 02 2022 00:00:00',
-      category: 'sample',
-      createdBy: 'James Javid'
-    },
-    {
-      name: 'Product Name',
-      id:'ea12',
-      description: 'this product is in awesome condition',
-      price: 320,
-      image: '',
-      location: 'Scarborough',
-      date: 'Sat Apr 02 2022 00:00:00',
-      category: 'sample',
-      createdBy: 'James Javid'
-    },
-    {
-      name: 'Product Name',
-      id:'ea12',
-      description: 'this product is in awesome condition',
-      price: 320,
-      image: '',
-      location: 'Scarborough',
-      date: 'Sat Apr 02 2022 00:00:00',
-      category: 'sample',
-      createdBy: 'James Javid'
-    }, {
-      name: 'Product Name',
-      id:'ea12',
-      description: 'this product is in awesome condition',
-      price: 320,
-      image: '',
-      location: 'Scarborough',
-      date: 'Sat Apr 02 2022 00:00:00',
-      category: 'sample',
-      createdBy: 'James Javid'
-    }, {
-      name: 'Product Name',
-      id:'ea12',
-      description: 'this product is in awesome condition',
-      price: 320,
-      image: '',
-      location: 'Scarborough',
-      date: 'Sat Apr 02 2022 00:00:00',
-      category: 'sample',
-      createdBy: 'James Javid'
-    },
-    {
-      name: 'Product Name',
-      id:'ea12',
-      description: 'this product is in awesome condition',
-      price: 320,
-      image: '',
-      location: 'Scarborough',
-      date: 'Sat Apr 02 2022 00:00:00',
-      category: 'sample',
-      createdBy: 'James Javid'
-    },
-    {
-      name: 'Product Name',
-      id:'ea12',
-      description: 'this product is in awesome condition',
-      price: 320,
-      image: '',
-      location: 'Scarborough',
-      date: 'Sat Apr 02 2022 00:00:00',
-      category: 'sample',
-      createdBy: 'James Javid'
-    }
-  ]
+  allAds = []
 
-  constructor() { }
+  constructor(
+    private fireBaseService: FireBaseService,
+  ) { }
 
   ngOnInit(): void {
+    this.fireBaseService.fetchAllAds(COLLECTIONS.ALL_ADS).subscribe((val: any) => {
+      this.allAds = val;
+    })
   }
 
 }

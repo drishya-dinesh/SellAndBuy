@@ -111,16 +111,6 @@
             ],
             "scripts": []
           }
-        },
-        "deploy": {
-          "builder": "@angular/fire:deploy",
-          "options": {
-            "prerender": false,
-            "ssr": false,
-            "browserTarget": "sell-and-buy:build:production",
-            "firebaseProject": "sell-and-buy-2168e",
-            "firebaseHostingSite": "sell-and-buy-2168e"
-          }
         }
       }
     }

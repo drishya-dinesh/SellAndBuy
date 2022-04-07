@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AdService } from 'src/app/service/ad.service';
-import { NewAd } from '../newAd.model';
+import { FireBaseService } from 'src/app/services/fire-base.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { COLLECTIONS } from '../app-constants';
 
 @Component({
   selector: 'app-my-ads',
@@ -8,54 +9,22 @@ import { NewAd } from '../newAd.model';
   styleUrls: ['./my-ads.component.scss'],
 })
 export class MyAdsComponent implements OnInit {
-  adList: NewAd[] = [];
 
-  myAds = [
-    {
-      id: '',
-      name: 'Product Name',
-      description: 'this product is in awesome condition',
-      price: 320,
-      image: '',
-      location: 'Scarborough',
-      date: 'Sat Apr 02 2022 00:00:00',
-      category: 'sample',
-      createdBy: 'user',
-    },
-    {
-      name: 'Product Name',
-      description: 'this product is in awesome condition',
-      price: 320,
-      image: '',
-      location: 'Scarborough',
-      date: 'Sat Apr 02 2022 00:00:00',
-      category: 'sample',
-      createdBy: 'user',
-    },
-    {
-      name: 'Product Name',
-      description: 'this product is in awesome condition',
-      price: 320,
-      image: '',
-      location: 'Scarborough',
-      date: 'Sat Apr 02 2022 00:00:00',
-      category: 'sample',
-      createdBy: 'user',
-    },
-  ];
+  myAds: any = [];
 
   isVisible = false;
 
   postAd: any = {
-    id: '',
     name: '',
     description: '',
     price: null,
     category: '',
     location: '',
     image: '',
-    date: new Date(),
-    createdBy: 'User',
+    date: String(new Date()),
+    sellerId: 'userId',
+    sellerName: 'Name of seller',
+    savedUsers: []
   };
 
   categoryList = ['Mobiles', 'Furniture', 'Camera', 'Other'];
@@ -64,28 +33,26 @@ export class MyAdsComponent implements OnInit {
 
   selectedImage = null;
 
-  constructor(public adService: AdService) {}
+  items: any
+
+  userId: any;
+
+  constructor(
+    private fireBaseService: FireBaseService,
+    private message: NzMessageService
+  ) {
+
+  }
 
   ngOnInit(): void {
-    this.getListAds();
+    this.userId = sessionStorage.getItem('userId');
+    this.fireBaseService.fetchMyAds(COLLECTIONS.ALL_ADS, this.userId).subscribe((val: any) => {
+      this.myAds = val;
+    })
   }
 
   openPostAd() {
     this.isVisible = true;
-  }
-  getListAds() {
-    this.adService.getAllAds().subscribe(
-      (res) => {
-        this.adList = res.map((e: any) => {
-          const newAd = e.payLoad.doc.newAd();
-          newAd.id = e.payLoad.doc.id;
-          return newAd;
-        });
-      },
-      (err) => {
-        alert('error while fetching data');
-      }
-    );
   }
 
   handleCancel() {
@@ -93,10 +60,12 @@ export class MyAdsComponent implements OnInit {
   }
 
   handleOk() {
-    this.myAds.push(this.postAd);
-    this.isVisible = false;
-    // this.adService.onPostAd(this.myAds.push(this.postAd));
-    this.postAd.id = '';
+    this.postAd.userId = this.userId;
+    this.fireBaseService.addToCollection(COLLECTIONS.ALL_ADS, this.postAd).then(() => {
+      this.isVisible = false;
+      this.message.create('success', 'Ad Posted Successfully');
+      this.myAds.push(this.postAd);
+    })
   }
 
   onImageSelect(event: any) {

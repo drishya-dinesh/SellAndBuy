@@ -1,7 +1,7 @@
 <div class="ads row">
     <ng-container *ngFor="let ad of ads">
         <div class="col-sm-12 col-md-6 col-xl-4">
-            <div class="ad">
+            <div class="ad" (click)="openAdDetails(ad)">
                 <div class="image">
                     <img [src]="ad.image||'assets/images/sample.jpg'">
                 </div>

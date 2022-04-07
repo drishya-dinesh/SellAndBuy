@@ -1,13 +1,12 @@
 export const environment = {
   firebase: {
-    apiKey: 'AIzaSyCuXAzOQnJ3ndFam9BIeb6wQJ4SWNp8G6Q',
-    authDomain: 'sell-and-buy-4a681.firebaseapp.com',
-    databaseURL: 'https://sell-and-buy-4a681-default-rtdb.firebaseio.com',
-    projectId: 'sell-and-buy-4a681',
-    storageBucket: 'sell-and-buy-4a681.appspot.com',
-    messagingSenderId: '641136376894',
-    appId: '1:641136376894:web:b28f0598697c1ef547a56f',
-    measurementId: 'G-P2EH1GMLM5',
+    projectId: 'test-21c6c',
+    appId: '1:265274952614:web:3f2be7b112c8e5809d5d67',
+    storageBucket: 'test-21c6c.appspot.com',
+    locationId: 'us-central',
+    apiKey: 'AIzaSyDisC7pdSA7cx2EkzriggJe1ykfq6hgDO4',
+    authDomain: 'test-21c6c.firebaseapp.com',
+    messagingSenderId: '265274952614',
   },
   production: true,
 };

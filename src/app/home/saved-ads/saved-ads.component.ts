@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FireBaseService } from 'src/app/services/fire-base.service';
+import { COLLECTIONS } from '../app-constants';
 
 @Component({
   selector: 'app-saved-ads',
@@ -7,39 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SavedAdsComponent implements OnInit {
 
-  savedAds = [
-    {
-      name: 'Product Name',
-      description: 'this product is in awesome condition',
-      price: 320,
-      image: '',
-      location: 'Scarborough',
-      date: 'Sat Apr 02 2022 00:00:00',
-      category: 'sample'
-    },
-    {
-      name: 'Product Name',
-      description: 'this product is in awesome condition',
-      price: 320,
-      image: '',
-      location: 'Scarborough',
-      date: 'Sat Apr 02 2022 00:00:00',
-      category: 'sample'
-    },
-    {
-      name: 'Product Name',
-      description: 'this product is in awesome condition',
-      price: 320,
-      image: '',
-      location: 'Scarborough',
-      date: 'Sat Apr 02 2022 00:00:00',
-      category: 'sample'
-    }
-  ]
+  savedAds = []
 
-  constructor() { }
+  userId: any = '';
+
+  constructor(
+    private fireBaseService: FireBaseService
+  ) { }
 
   ngOnInit(): void {
+    this.userId = sessionStorage.getItem('userId');
+    this.fireBaseService.fetchSavedAds(COLLECTIONS.ALL_ADS, this.userId).subscribe((val: any) => {
+      this.savedAds = val;
+    })
   }
 
 }

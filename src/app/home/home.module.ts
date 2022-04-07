@@ -18,6 +18,8 @@ import { FormsModule } from '@angular/forms';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { NzMessageModule } from 'ng-zorro-antd/message';
+
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
     FormsModule,
     NzModalModule,
     NzSelectModule,
-    NzPopoverModule
+    NzPopoverModule,
+    NzMessageModule
   ]
 })
 export class HomeModule { }
