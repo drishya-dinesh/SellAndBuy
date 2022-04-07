@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "sell-and-buy-2168e": {
+      "hosting": {
+        "sell-and-buy": [
+          "sell-and-buy-2168e"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "sell-and-buy-2168e"
+  }
+}
