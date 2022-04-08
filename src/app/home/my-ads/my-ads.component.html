@@ -3,7 +3,7 @@
         <button nz-button [nzSize]="'large'" nzType="primary" (click)="openPostAd()">Post Your Ad.</button>
         Helps you to post your ads in the universe.
     </div>
-    <app-ads-list [ads]="myAds"></app-ads-list>
+    <app-ads-list [ads]="myAds" (refreshAdList)="refreshList()"></app-ads-list>
 </div>
 
 <nz-modal [(nzVisible)]="isVisible" nzTitle="Post Your Ad." (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
@@ -36,13 +36,13 @@
                 </nz-select>
             </div>
             <div class="col-sm-12 col-md-12 col-xl-8 form-group d-flex align-items-center">
-                <input nz-input type="file"  accept="image/png, image/jpeg, image/png"  placeholder="Select Image" [(ngModel)]="selectedImage"
-                    (change)="onImageSelect($event)" />
+                <input nz-input type="file" accept="image/png, image/jpeg, image/png" multiple="multiple"
+                    placeholder="Select Image" [(ngModel)]="selectedImage" (change)="onImageSelect($event)" />
                 <a *ngIf="postAd.image" nz-button nzType="link" nz-popover nzPopoverTrigger="click"
                     [nzPopoverContent]="preview">Preview</a>
                 <ng-template #preview>
                     <div class="preview-image">
-                        <img [src]="postAd.image" alt="Preview">
+                        <img [src]="postAd.image[0]" alt="Preview">
                     </div>
                 </ng-template>
             </div>
@@ -50,6 +50,7 @@
     </ng-container>
     <div *nzModalFooter>
         <button nz-button class="footer-button" nzType="default" (click)="handleCancel()">Cancel</button>
-        <button nz-button class="footer-button" nzType="primary" (click)="handleOk()" [disabled]="isFormInvalid">Post</button>
+        <button nz-button class="footer-button" nzType="primary" [nzLoading]="postLoading"
+            (click)="!postLoading&&handleOk()" [disabled]="isFormInvalid">Post</button>
     </div>
 </nz-modal>

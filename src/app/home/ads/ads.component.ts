@@ -21,4 +21,8 @@ export class AdsComponent implements OnInit {
     })
   }
 
+  refreshAds() {
+    this.ngOnInit()
+  }
+
 }

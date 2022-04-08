@@ -13,7 +13,7 @@ export class AppComponent {
 
 
   constructor() {
-    sessionStorage.setItem('userId', 'sellerId')
+    sessionStorage.setItem('userId', 'this.userId')
   }
 
 }

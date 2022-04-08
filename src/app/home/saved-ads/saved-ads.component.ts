@@ -23,5 +23,7 @@ export class SavedAdsComponent implements OnInit {
       this.savedAds = val;
     })
   }
-
+  refreshList() {
+    this.ngOnInit();
+  }
 }

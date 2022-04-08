@@ -1,7 +1,6 @@
 .ads {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
 
     .ad {
         // width: 30%;
@@ -68,5 +67,97 @@
                 transition: max-height .5s;
             }
         }
+    }
+}
+
+.ad-details {
+    .images {
+        border: 1px solid #dedede;
+        padding: 10px;
+        width: 100%;
+
+        .image {
+            position: relative;
+
+            img {
+                max-height: 70vh;
+                min-height: 70vh;
+                height: 70vh;
+                user-select: none;
+            }
+
+            .navigation {
+                cursor: pointer;
+                font-size: 26px;
+                z-index: 100;
+                position: absolute;
+                height: 50px;
+                width: 30px;
+                background: #fff;
+                box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+            }
+
+            .left {
+                top: 40%;
+                left: 0;
+            }
+
+            .right {
+                top: 40%;
+                right: 0;
+            }
+        }
+    }
+
+    .details {
+        .name {
+            font-weight: 600;
+            font-size: 24px;
+            text-transform: uppercase;
+        }
+
+        .price {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .info {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .meta {
+            margin-top: 20px;
+
+            .header {
+                font-size: 18px;
+                font-weight: 600;
+            }
+
+            .value {
+                font-size: 18px;
+                max-height: 38vh;
+                overflow: auto;
+            }
+        }
+    }
+
+    .button-group {
+        margin-top: 30px;
+
+        button {
+            width: 100%;
+
+        }
+
+        .delete {
+            margin-top: 20px;
+        }
+    }
+}
+
+::ng-deep {
+    .ad-details-modal {
+        top: 50px !important;
     }
 }

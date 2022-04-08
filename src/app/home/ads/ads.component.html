@@ -7,5 +7,5 @@
             <button nz-button nzType="primary" nzSize="large" nzSearch>Search</button>
         </ng-template>
     </div>
-    <app-ads-list [ads]="allAds"></app-ads-list>
+    <app-ads-list [ads]="allAds" (refreshAdList)="refreshAds()"></app-ads-list>
 </div>

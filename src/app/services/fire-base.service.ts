@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class FireBaseService {
-  constructor(private firestore: AngularFirestore) {}
+  constructor(private firestore: AngularFirestore) { }
 
   fetchAllAds(collectionName: string) {
     return this.firestore
@@ -72,5 +72,12 @@ export class FireBaseService {
       .collection(collectionName)
       .doc(adId)
       .update({ savedUsers: savedUsers });
+  }
+
+  deleteAd(collectionName: string, adId: string) {
+    return this.firestore
+      .collection(collectionName)
+      .doc(adId)
+      .delete();
   }
 }
