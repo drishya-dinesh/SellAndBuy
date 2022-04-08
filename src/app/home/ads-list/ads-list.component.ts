@@ -6,10 +6,9 @@ import { COLLECTIONS } from '../app-constants';
 @Component({
   selector: 'app-ads-list',
   templateUrl: './ads-list.component.html',
-  styleUrls: ['./ads-list.component.scss']
+  styleUrls: ['./ads-list.component.scss'],
 })
 export class AdsListComponent implements OnInit {
-
   @Input() ads: any = [];
 
   userId: any = '';
@@ -17,11 +16,10 @@ export class AdsListComponent implements OnInit {
   constructor(
     private fireBaseService: FireBaseService,
     private message: NzMessageService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.userId = sessionStorage.getItem('userId');
-
   }
 
   openAdDetails(ad: any) {
@@ -29,12 +27,14 @@ export class AdsListComponent implements OnInit {
   }
 
   saveAd(ad: any) {
-    if (!ad?.savedUsers?.includes(this.userId)) {
-      const savedUsers = ad.savedUsers || [];
+    if (!ad.savedUsers.includes(this.userId)) {
+      const savedUsers = ad.savedUsers;
       savedUsers.push(this.userId);
-      this.fireBaseService.saveAd(COLLECTIONS.ALL_ADS, ad.id, savedUsers).then(() => {
-        this.message.create('success', 'Ad Saved Successfully');
-      })
+      this.fireBaseService
+        .saveAd(COLLECTIONS.ALL_ADS, ad.id, savedUsers)
+        .then(() => {
+          this.message.create('success', 'Ad Saved Successfully');
+        });
     }
   }
 }
