@@ -35,6 +35,18 @@ export class MyAdsComponent implements OnInit {
     'watch',
     'headset/Headphones',
     'PC/LapTop/Computers',
+    'Antiques & Collectibles',
+    'Arts and crafts',
+    'Garage Sale',
+    'Health & beauty',
+    'Pet supplies',
+    'Toys & Games',
+    'vehicles',
+    'Rentals',
+    'clothin & shoes',
+    'instruments',
+    'jewellery',
+    'Miscellaneous',
   ];
 
   locationList = [
@@ -44,7 +56,19 @@ export class MyAdsComponent implements OnInit {
     'Ontario',
     'pickering',
     'vaughan',
-    'Other',
+    'Miliken',
+    'Richmond Hill',
+    'Oshawa',
+    'Uxbridge',
+    'Peterborough',
+    'Westwood',
+    'Lakefield',
+    'Barrie',
+    'Missisauga',
+    'Kitchener',
+    'Hamilton',
+    'London',
+    'Brampton',
   ];
 
   selectedImage = null;
