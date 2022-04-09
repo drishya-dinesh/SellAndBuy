@@ -1,0 +1,81 @@
+<div *ngIf="pageType === 'login'" class="login-container d-flex align-items-center justify-content-center">
+    <div class="login-card rounded-3 p-5">
+        <div class="logo-section d-flex align-items-center">
+            <img src="assets/images/logo.png">
+            <span>Sell-and-Buy</span>
+        </div>
+        <div class="login-label">
+            Sign in to your account
+        </div>
+        <div class="input-filed">
+            <input (ngModelChange)="validateLogin()" [(ngModel)]="loginObject.email"
+                [ngClass]="{'error':loginErrorMessage&&!loginObject.email}" class="form-control username"
+                placeholder="Username">
+            <input (ngModelChange)="validateLogin()" [(ngModel)]="loginObject.password"
+                [ngClass]="{'error':loginErrorMessage&&!loginObject.password}" class="form-control password"
+                placeholder="Password" type="password">
+            <button nz-button nzType="primary" [nzLoading]="loginLoading" (click)="login()"
+                class="btn btn-primary w-100">Sign In</button>
+            <div class="d-flex justify-content-between mt-2 px-1">
+                <span>Don't have an account?</span>
+                <span (click)="gotoRegister()"><a href="javascript:void(0)">Register</a></span>
+            </div>
+        </div>
+        <div class="login-error d-flex justify-content-center text-danger">{{loginErrorMessage}}</div>
+    </div>
+</div>
+
+<div *ngIf="pageType === 'register'" class="login-container d-flex align-items-center justify-content-center">
+    <div class="register-card rounded-3 p-5">
+        <div class="logo-section d-flex align-items-center">
+            <img src="assets/images/logo.png">
+            <span>Sell-and-Buy</span>
+        </div>
+        <div class="login-label">
+            Register your account
+        </div>
+        <div class="input-filed">
+            <div class="reg-input-group">
+                <input [(ngModel)]="registerObject.fullName.value"
+                    [ngClass]="{'error':registerObject.fullName.errorMessage}" class="form-control username"
+                    placeholder="Full Name">
+                <img *ngIf="registerObject.fullName.errorMessage" nz-tooltip
+                    [nzTooltipTitle]="registerObject.fullName.errorMessage" src="assets/images/info.svg">
+            </div>
+            <div class="reg-input-group">
+                <input [(ngModel)]="registerObject.email.value" [ngClass]="{'error':registerObject.email.errorMessage}"
+                    class="form-control username" placeholder="Email">
+                <img *ngIf="registerObject.email.errorMessage" nz-tooltip
+                    [nzTooltipTitle]="registerObject.email.errorMessage" src="assets/images/info.svg">
+            </div>
+            <div class="reg-input-group">
+                <input [(ngModel)]="registerObject.phone.value" [ngClass]="{'error':registerObject.phone.errorMessage}"
+                    class="form-control username" placeholder="Phone Number" type="text">
+                <img *ngIf="registerObject.phone.errorMessage" nz-tooltip
+                    [nzTooltipTitle]="registerObject.phone.errorMessage" src="assets/images/info.svg">
+            </div>
+            <div class="reg-input-group">
+                <input [(ngModel)]="registerObject.password.value"
+                    [ngClass]="{'error':registerObject.password.errorMessage}" class="form-control password"
+                    placeholder="Password" type="password">
+                <img *ngIf="registerObject.password.errorMessage" nz-tooltip
+                    [nzTooltipTitle]="registerObject.password.errorMessage" src="assets/images/info.svg">
+
+            </div>
+            <div class="reg-input-group">
+                <input [(ngModel)]="registerObject.confirmPassword.value"
+                    [ngClass]="{'error':registerObject.confirmPassword.errorMessage}" class="form-control password"
+                    placeholder="Confirm Password" type="password">
+                <img *ngIf="registerObject.confirmPassword.errorMessage" nz-tooltip
+                    [nzTooltipTitle]="registerObject.confirmPassword.errorMessage" src="assets/images/info.svg">
+
+            </div>
+            <button nz-button nzType="primary" [nzLoading]="registerLoading" (click)="register()"
+                class="btn btn-primary w-100">Register</button>
+            <div class="d-flex justify-content-between mt-2 px-1">
+                <span>Already have an account?</span>
+                <span (click)="backToLogin()"><a href="javascript:void(0)">Login</a></span>
+            </div>
+        </div>
+    </div>
+</div>

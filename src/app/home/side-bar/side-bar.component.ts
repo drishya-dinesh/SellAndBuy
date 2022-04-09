@@ -44,7 +44,8 @@ export class SideBarComponent implements OnInit {
   }
 
   navigateToRoute(route: string) {
-    this.router.navigate(['home/' + route])
+    sessionStorage.removeItem('selectedChatId');
+    this.router.navigate(['home/' + route]);
   }
 
 }

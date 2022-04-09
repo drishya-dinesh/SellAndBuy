@@ -1,11 +1,12 @@
 <div class="ads-container">
     <div class="search-container">
         <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
-            <input type="text" nz-input placeholder="Find your items" />
+            <input type="text" nz-input placeholder="Find your items" [(ngModel)]="searchText" />
         </nz-input-group>
         <ng-template #suffixButton>
             <button nz-button nzType="primary" nzSize="large" nzSearch>Search</button>
         </ng-template>
     </div>
-    <app-ads-list [ads]="allAds" (refreshAdList)="refreshAds()"></app-ads-list>
+    <app-ads-list [ads]="allAds" [loading]="adsLoading" [searchText]="searchText" (refreshAdList)="refreshAds()">
+    </app-ads-list>
 </div>

@@ -9,14 +9,20 @@ import { COLLECTIONS } from '../app-constants';
 })
 export class AdsComponent implements OnInit {
 
-  allAds = []
+  allAds = [];
+
+  adsLoading = false;
+
+  searchText = '';
 
   constructor(
     private fireBaseService: FireBaseService,
   ) { }
 
   ngOnInit(): void {
+    this.adsLoading = true;
     this.fireBaseService.fetchAllAds(COLLECTIONS.ALL_ADS).subscribe((val: any) => {
+      this.adsLoading = false;
       this.allAds = val;
     })
   }

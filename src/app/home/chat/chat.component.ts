@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FireBaseService } from 'src/app/services/fire-base.service';
+import { COLLECTIONS } from '../app-constants';
 
 @Component({
   selector: 'app-chat',
@@ -9,65 +11,49 @@ export class ChatComponent implements OnInit {
 
   selectedChatIndex = -1;
 
-  chatList = [
-    {
-      name: 'Product Name',
-      createdBy: 'James David',
-      id: 'ea12',
-      chats: [
-        {
-          message: 'Hi, Is this available?.',
-          type: 'buyer'
-        },
-        {
-          message: 'Yes, Are you interested?.',
-          type: 'seller'
-        },
-        {
-          message: 'My I know more details about the product?.',
-          type: 'buyer'
-        },
-        {
-          message: 'Yes, Sure.\n The iPhone is a smartphone made by Apple that combines a computer, iPod, digital camera and cellular phone into one device with a touchscreen interface. The iPhone runs the iOS operating system, and in 2021 when the iPhone 13 was introduced, it offered up to 1 TB of storage and a 12-megapixel camera.',
-          type: 'seller'
-        }
-      ]
-    },
-    {
-      name: 'Product Name',
-      createdBy: 'James David',
-      id: 'ea12',
-      chats: [
-        {
-          message: 'Hi, Is this available?.',
-          type: 'buyer'
-        },
-        {
-          message: 'Yes, Are you interested.',
-          type: 'seller'
-        }
-      ]
-    }
-  ]
+  selectedChatId: any = '';
+
+  chatList: any = []
 
   inputMessage = '';
 
-  constructor() { }
+  userId: any = '';
+
+  constructor(
+    private firebaseService: FireBaseService
+  ) { }
 
   ngOnInit(): void {
+    this.userId = sessionStorage.getItem('userId');
+    this.selectedChatId = sessionStorage.getItem('selectedChatId');
+    this.firebaseService.allChats(COLLECTIONS.CHATS, this.userId, 'buyerId').subscribe((val: any) => {
+      this.chatList = this.chatList.concat(val);
+      this.firebaseService.allChats(COLLECTIONS.CHATS, this.userId, 'sellerId').subscribe((val: any) => {
+        this.chatList = this.chatList.concat(val)
+        this.getSelectedChatIndex();
+      })
+    })
+  }
+
+  getSelectedChatIndex() {
+    this.selectedChatIndex = this.chatList.findIndex((x: any) => x.adId = this.selectedChatId)
   }
 
   selectChat(index: number) {
     this.selectedChatIndex = index;
+    sessionStorage.setItem('selectedChatId', this.chatList[index].adId);
   }
 
   sendMessage() {
     const message = {
       message: this.inputMessage,
-      type: 'buyer'
+      sentBy: this.userId
     }
     this.chatList[this.selectedChatIndex].chats.push(message);
     this.inputMessage = '';
+    this.firebaseService.sendMessage(COLLECTIONS.CHATS, this.chatList[this.selectedChatIndex].id, this.chatList[this.selectedChatIndex].chats).then(() => {
+      console.log('message sent');
+    })
   }
 
 }

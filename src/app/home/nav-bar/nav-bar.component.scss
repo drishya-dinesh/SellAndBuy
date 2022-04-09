@@ -1,4 +1,4 @@
-.nav-bar{
+.nav-bar {
     height: 60px;
     border-bottom: 1px solid #dedede;
     width: calc(100vw - 82px);
@@ -11,7 +11,8 @@
     background: #fff;
     z-index: 1;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 2px 24px;
-    .app-name{
+
+    .app-name {
         color: #fff;
         line-height: 40px;
         background: #ec7200;
@@ -21,8 +22,19 @@
         font-weight: 600;
         letter-spacing: 2.5px;
     }
-    .caption{
+
+    .caption {
         margin-left: 30px;
         font-weight: 400;
+    }
+
+    .welcome {
+        margin-right: 20px;
+        cursor: pointer;
+
+        img {
+            height: 30px;
+            margin-right: 10px;
+        }
     }
 }

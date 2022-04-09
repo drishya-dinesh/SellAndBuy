@@ -1,6 +1,6 @@
-<div class="container-fluid">
+<div *ngIf="!loading" class="container-fluid">
     <div class="ads row">
-        <ng-container *ngFor="let ad of ads">
+        <ng-container *ngFor="let ad of ads | adFilter: searchText">
             <div class="col-sm-12 col-md-6 col-xl-4">
                 <div class="ad" (click)="openAdDetails(ad)">
                     <div class="image">
@@ -28,7 +28,16 @@
                 </div>
             </div>
         </ng-container>
+        <div *ngIf="ads.length === 0" class="text-center d-flex justify-content-center w-100 align-items-center"
+            style="height: 70vh;">
+            <span>
+                No data found.
+            </span>
+        </div>
     </div>
+</div>
+<div *ngIf="loading" class="align-items-center d-flex justify-content-center" style="height: 70vh;">
+    <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
 </div>
 
 
@@ -63,7 +72,7 @@
                     </div>
                     <div class="row button-group">
                         <div class="col-6 save" *ngIf="selectedAd.sellerId !== userId">
-                            <button nz-button nzType="default" nzSize="large">
+                            <button nz-button nzType="default" nzSize="large" (click)="onMessageClick()">
                                 <div class="d-flex justify-content-center align-items-center">
                                     Message &nbsp;
                                     <i nz-icon nzType="message" nzTheme="outline"></i>

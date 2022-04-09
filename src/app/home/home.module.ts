@@ -19,6 +19,9 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { AdFilterPipe } from '../services/ad-filter.pipe';
 
 
 @NgModule({
@@ -32,6 +35,7 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
     DateAgoPipe,
     AdsListComponent,
     ChatComponent,
+    AdFilterPipe
   ],
   imports: [
     CommonModule,
@@ -43,7 +47,9 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
     NzModalModule,
     NzSelectModule,
     NzPopoverModule,
-    NzMessageModule
+    NzMessageModule,
+    NzDropDownModule,
+    NzSpinModule
   ]
 })
 export class HomeModule { }

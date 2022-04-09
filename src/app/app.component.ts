@@ -11,9 +11,7 @@ export class AppComponent {
 
   items: any
 
-
   constructor() {
-    sessionStorage.setItem('userId', 'this.userId')
   }
 
 }

@@ -13,13 +13,17 @@ export class SavedAdsComponent implements OnInit {
 
   userId: any = '';
 
+  adsLoading = false;
+
   constructor(
     private fireBaseService: FireBaseService
   ) { }
 
   ngOnInit(): void {
     this.userId = sessionStorage.getItem('userId');
+    this.adsLoading = true;
     this.fireBaseService.fetchSavedAds(COLLECTIONS.ALL_ADS, this.userId).subscribe((val: any) => {
+      this.adsLoading = false;
       this.savedAds = val;
     })
   }

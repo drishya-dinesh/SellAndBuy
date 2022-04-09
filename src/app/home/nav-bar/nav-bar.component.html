@@ -1,4 +1,17 @@
-<div class="nav-bar">
-    <div class="app-name"> Sell and Buy </div>
-    <div class="caption"> when you care what other needs</div>
+<div class="nav-bar d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center">
+        <div class="app-name"> Sell and Buy </div>
+        <div class="caption"> When you care what others need.</div>
+    </div>
+    <div class="welcome d-flex align-items-center" nz-dropdown [nzDropdownMenu]="menu">
+        <img src="assets/images/user.svg">
+        <span>
+            {{userName}}
+        </span>
+    </div>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+            <li nz-menu-item (click)="logout()">Logout</li>
+        </ul>
+    </nz-dropdown-menu>
 </div>

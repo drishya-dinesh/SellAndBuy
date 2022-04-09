@@ -9,8 +9,8 @@
                     <div class="item" [ngClass]="{'selected':selectedChatIndex===i}" (click)="selectChat(i)">
                         <img src="assets/images/user.svg">
                         <div class="details">
-                            <div class="product">{{people.name}}</div>
-                            <div class="person">{{people.createdBy}}</div>
+                            <div class="product">{{people.adDetails.name}}</div>
+                            <div class="person">{{people.sellerName}}</div>
                         </div>
                     </div>
                 </ng-container>
@@ -25,12 +25,12 @@
             <ng-container *ngIf="selectedChatIndex>-1">
                 <div class="messages">
                     <ng-container *ngFor="let message of chatList[selectedChatIndex].chats">
-                        <div *ngIf="message.type==='seller'" class="d-flex justify-content-start">
+                        <div *ngIf="message.sentBy!==userId" class="d-flex justify-content-start">
                             <span class="message-bubble seller">
                                 {{message.message}}
                             </span>
                         </div>
-                        <div *ngIf="message.type==='buyer'" class="d-flex justify-content-end">
+                        <div *ngIf="message.sentBy===userId" class="d-flex justify-content-end">
                             <span class="message-bubble buyer">
                                 {{message.message}}
                             </span>

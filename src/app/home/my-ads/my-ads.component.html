@@ -3,7 +3,7 @@
         <button nz-button [nzSize]="'large'" nzType="primary" (click)="openPostAd()">Post Your Ad.</button>
         Helps you to post your ads in the universe.
     </div>
-    <app-ads-list [ads]="myAds" (refreshAdList)="refreshList()"></app-ads-list>
+    <app-ads-list [ads]="myAds" [loading]="adsLoading" (refreshAdList)="refreshList()"></app-ads-list>
 </div>
 
 <nz-modal [(nzVisible)]="isVisible" nzTitle="Post Your Ad." (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { FireBaseService } from 'src/app/services/fire-base.service';
 import { COLLECTIONS } from '../app-constants';
@@ -9,11 +10,18 @@ import { COLLECTIONS } from '../app-constants';
   styleUrls: ['./ads-list.component.scss'],
 })
 export class AdsListComponent implements OnInit {
+
   @Input() ads: any = [];
+
+  @Input() loading: any = false;
+
+  @Input() searchText: any = false;
 
   @Output() refreshAdList: EventEmitter<any> = new EventEmitter<any>();
 
   userId: any = '';
+
+  userName: any = '';
 
   showAdDetails = false;
 
@@ -29,11 +37,13 @@ export class AdsListComponent implements OnInit {
 
   constructor(
     private fireBaseService: FireBaseService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.userId = sessionStorage.getItem('userId');
+    this.userName = sessionStorage.getItem('userName');
   }
 
   openAdDetails(ad: any) {
@@ -103,5 +113,36 @@ export class AdsListComponent implements OnInit {
     } else {
       this.imageIndex += 1;
     }
+  }
+
+  onMessageClick() {
+    this.fireBaseService.checkChatExists(COLLECTIONS.CHATS, this.selectedAd, this.userId).subscribe((val: any) => {
+      if (val.length > 0) {
+        this.message.create('success', 'Continue to chat');
+        sessionStorage.setItem('selectedChatId', val[0].adId);
+        this.router.navigate(['home/chats'])
+      } else {
+        this.insertChat();
+      }
+    })
+  }
+
+  insertChat() {
+    let ad = { ...this.selectedAd };
+    delete ad.image;
+    const chatData = {
+      buyerId: this.userId,
+      buyerName: this.userName,
+      sellerId: this.selectedAd.sellerId,
+      sellerName: this.selectedAd.sellerName,
+      adDetails: ad,
+      adId: ad.id,
+      chats: []
+    }
+    this.fireBaseService.startChat(COLLECTIONS.CHATS, chatData).then(() => {
+      this.message.create('success', 'Continue to chat');
+      this.router.navigate(['home/chats'])
+      sessionStorage.setItem('selectedChatId', ad.id);
+    })
   }
 }

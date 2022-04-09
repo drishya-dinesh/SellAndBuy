@@ -77,7 +77,11 @@ export class MyAdsComponent implements OnInit {
 
   userId: any;
 
+  userName: any = '';
+
   postLoading = false;
+
+  adsLoading = false;
 
   constructor(
     private fireBaseService: FireBaseService,
@@ -86,9 +90,12 @@ export class MyAdsComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = sessionStorage.getItem('userId');
+    this.userName = sessionStorage.getItem('userName');
+    this.adsLoading = true;
     this.fireBaseService
       .fetchMyAds(COLLECTIONS.ALL_ADS, this.userId)
       .subscribe((val: any) => {
+        this.adsLoading = false;
         this.myAds = val;
       });
   }
@@ -108,14 +115,15 @@ export class MyAdsComponent implements OnInit {
       location: '',
       image: '',
       date: String(new Date()),
-      sellerId: 'userId',
-      sellerName: 'Name of seller',
+      sellerId: '',
+      sellerName: '',
       savedUsers: [],
     };
   }
 
   handleOk() {
-    this.postAd.sellerId = 'this.userId';
+    this.postAd.sellerId = this.userId;
+    this.postAd.sellerName = this.userName;
     this.postLoading = true;
     this.fireBaseService.postAd(COLLECTIONS.ALL_ADS, this.postAd).then(() => {
       this.postLoading = false;
