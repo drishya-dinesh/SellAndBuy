@@ -100,10 +100,11 @@ export class AdsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = sessionStorage.getItem('userId');
+    this.userName = sessionStorage.getItem('userName');
   }
   updateAdClick(ad: any) {
     this.isVisible = true;
-    this.postAd = {...ad};
+    this.postAd = { ...ad };
   }
   openAdDetails(ad: any) {
     this.selectedAd = ad;
@@ -114,15 +115,19 @@ export class AdsListComponent implements OnInit {
   handleOk() {
     this.postLoading = true;
     const id = this.selectedAd.id;
-    this.fireBaseService.updateAd(COLLECTIONS.ALL_ADS,id, this.postAd ).then(()=>{
-      this.message.create('success', 'Ad Updated Successfully');
-      this.isVisible = false;
-      this.selectedAd = {...this.postAd}
-    }).catch(()=>{
-      this.message.create('error', 'Couldn\'t update ad.');
-    }).finally(()=>{
-      this.postLoading = false;
-    })
+    this.fireBaseService
+      .updateAd(COLLECTIONS.ALL_ADS, id, this.postAd)
+      .then(() => {
+        this.message.create('success', 'Ad Updated Successfully');
+        this.isVisible = false;
+        this.selectedAd = { ...this.postAd };
+      })
+      .catch(() => {
+        this.message.create('error', "Couldn't update ad.");
+      })
+      .finally(() => {
+        this.postLoading = false;
+      });
   }
 
   closeAdDetails() {
@@ -275,6 +280,7 @@ export class AdsListComponent implements OnInit {
       adId: ad.id,
       chats: [],
     };
+    console.log(chatData);
     this.fireBaseService.startChat(COLLECTIONS.CHATS, chatData).then(() => {
       this.message.create('success', 'Continue to chat');
       this.router.navigate(['home/chats']);

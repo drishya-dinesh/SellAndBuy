@@ -10,8 +10,9 @@
                         <img src="assets/images/user.svg">
                         <div class="details">
                             <div class="product">{{people.adDetails.name}}</div>
-                            <div class="person">{{people.sellerName}}</div>
+                            <div class="person">{{people.adDetails.sellerId===userId?people.buyerName:people.sellerName}}</div>
                         </div>
+
                     </div>
                 </ng-container>
             </div>
@@ -39,8 +40,7 @@
                 </div>
                 <div class="align-items-end d-flex send-section">
                     <div class="input w-100">
-                        <textarea nz-input placeholder="Message Seller" [(ngModel)]="inputMessage"
-                            [nzAutosize]="{ minRows: 3, maxRows: 3 }"></textarea>
+                        <textarea nz-input placeholder="Message Seller" [(ngModel)]="inputMessage" [nzAutosize]="{ minRows: 3, maxRows: 3 }"></textarea>
                     </div>
                     <button nz-button nzType="primary" nzSize="large" (click)="sendMessage()">
                         <div class="d-flex justify-content-around align-items-center">
