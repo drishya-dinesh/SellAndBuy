@@ -28,8 +28,7 @@
                 </div>
             </div>
         </ng-container>
-        <div *ngIf="ads.length === 0" class="text-center d-flex justify-content-center w-100 align-items-center"
-            style="height: 70vh;">
+        <div *ngIf="ads.length === 0" class="text-center d-flex justify-content-center w-100 align-items-center" style="height: 70vh;">
             <span>
                 No data found.
             </span>
@@ -41,8 +40,7 @@
 </div>
 
 
-<nz-modal [(nzVisible)]="showAdDetails" nzTitle="Ad. Details" nzClassName="ad-details-modal"
-    [nzBodyStyle]="{height:'80vh'}" (nzOnCancel)="closeAdDetails()" [nzStyle]="{width:'80%'}">
+<nz-modal [(nzVisible)]="showAdDetails" nzTitle="Ad. Details" nzClassName="ad-details-modal" [nzBodyStyle]="{height:'80vh'}" (nzOnCancel)="closeAdDetails()" [nzStyle]="{width:'80%'}">
     <ng-container *nzModalContent>
         <div *ngIf="selectedAd">
             <div class="row ad-details">
@@ -63,8 +61,8 @@
                     <div class="details">
                         <div class="name">{{selectedAd.name}}</div>
                         <div class="price">${{selectedAd.price | number}}</div>
-                        <div class="info"> Listed {{selectedAd.date | dateAgo}} in {{selectedAd.location}} by
-                            {{selectedAd.sellerName}}</div>
+                        <div class="info"> Listed {{selectedAd.date | dateAgo}} in {{selectedAd.location}} by {{selectedAd.sellerName}}
+                        </div>
                         <div class="meta">
                             <div class="header">Details</div>
                             <div class="value">{{selectedAd.description}}</div>
@@ -80,11 +78,18 @@
                             </button>
                         </div>
                         <div class="col-6 chat" *ngIf="selectedAd.sellerId !== userId">
-                            <button nz-button nzType="primary" nzSize="large"
-                                (click)="!saveLoading&&saveAd(selectedAd)">
+                            <button nz-button nzType="primary" nzSize="large" (click)="!saveLoading&&saveAd(selectedAd)">
                                 <div class="d-flex justify-content-center align-items-center">
                                     {{selectedAd.savedUsers.includes(userId)?'UnSave':'Save'}} &nbsp;
                                     <i nz-icon nzType="save" nzTheme="outline"></i>
+                                </div>
+                            </button>
+                        </div>
+                        <div *ngIf="selectedAd.sellerId === userId" class="col-12">
+                            <button nz-button nzType="primary" nzSize="large" (click)="updateAdClick(selectedAd)">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    Update Ad &nbsp;
+                                    <i nz-icon nzType="sync" nzTheme="outline"></i>
                                 </div>
                             </button>
                         </div>
@@ -106,8 +111,7 @@
 </nz-modal>
 
 
-<nz-modal [(nzVisible)]="showDelete" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
-    (nzOnCancel)="cancelDelete()">
+<nz-modal [(nzVisible)]="showDelete" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="cancelDelete()">
     <ng-template #modalTitle>Delete!</ng-template>
     <ng-template #modalContent>
         <p>Do you really want to delete this ad? This action cannot be undone.</p>
@@ -117,4 +121,47 @@
         <button nz-button nzType="primary" (click)="confirmDelete()" nzDanger [nzLoading]="deleteLoading">Yes,
             Delete</button>
     </ng-template>
+</nz-modal>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Update Your Ad." (nzOnCancel)="handleCancel()" (nzOnOk)="updateAdClick(ads)" [nzStyle]="{width:'800px'}">
+    <ng-container *nzModalContent>
+        <div class="row ad-modal">
+            <div class="col-sm-12 col-md-12 col-xl-6 form-group">
+                <input nz-input placeholder="Product Name" [(ngModel)]='postAd.name' />
+            </div>
+            <div class="col-sm-12 col-md-12 col-xl-8 form-group">
+                <textarea nz-input placeholder="Product description" [nzAutosize]="{ minRows: 3, maxRows: 3 }" [(ngModel)]="postAd.description">
+                </textarea>
+            </div>
+            <div class="col-sm-12 col-md-12 col-xl-6 form-group">
+                <input type="number" nz-input placeholder="Price" [(ngModel)]="postAd.price" />
+            </div>
+            <div class="col-sm-12 col-md-12 col-xl-6 form-group">
+                <nz-select nzPlaceHolder="Select Category" [(ngModel)]="postAd.category">
+                    <ng-container *ngFor="let item of categoryList">
+                        <nz-option [nzLabel]="item" [nzValue]="item"></nz-option>
+                    </ng-container>
+                </nz-select>
+            </div>
+            <div class="col-sm-12 col-md-12 col-xl-6 form-group">
+                <nz-select nzPlaceHolder="Select Location" [(ngModel)]="postAd.location">
+                    <ng-container *ngFor="let item of locationList">
+                        <nz-option [nzLabel]="item" [nzValue]="item"></nz-option>
+                    </ng-container>
+                </nz-select>
+            </div>
+            <div class="col-sm-12 col-md-12 col-xl-8 form-group d-flex align-items-center">
+                <input nz-input type="file" accept="image/png, image/jpeg, image/png" multiple="multiple" placeholder="Select Image" [(ngModel)]="selectedImage" (change)="onImageSelect($event)" />
+                <a *ngIf="postAd.image" nz-button nzType="link" nz-popover nzPopoverTrigger="click" [nzPopoverContent]="preview">Preview</a>
+                <ng-template #preview>
+                    <div class="preview-image">
+                        <img [src]="postAd.image[0]" alt="Preview">
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </ng-container>
+    <div *nzModalFooter>
+        <button nz-button class="footer-button" nzType="default" (click)="handleCancel()">Cancel</button>
+        <button nz-button class="footer-button" nzType="primary" [nzLoading]="postLoading" (click)="!postLoading&&handleOk()" [disabled]="isFormInvalid">Post</button>
+    </div>
 </nz-modal>

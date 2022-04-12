@@ -86,7 +86,7 @@ export class MyAdsComponent implements OnInit {
   constructor(
     private fireBaseService: FireBaseService,
     private message: NzMessageService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.userId = sessionStorage.getItem('userId');
@@ -150,13 +150,15 @@ export class MyAdsComponent implements OnInit {
   }
 
   handleFileSelect(event: any) {
-    if (Array.from(event.target.files).some((file: any) => ((file.size / 1024) > 512))) {
+    if (
+      Array.from(event.target.files).some((file: any) => file.size / 1024 > 512)
+    ) {
       this.message.create('error', 'file size must be less than 512kb');
       this.selectedImage = null;
     } else {
       this.tobase64Handler(event.target.files).then((val: any) => {
         this.postAd.image = val;
-      })
+      });
     }
   }
 
@@ -165,9 +167,9 @@ export class MyAdsComponent implements OnInit {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => resolve(String(reader.result));
-      reader.onerror = error => reject(error);
+      reader.onerror = (error) => reject(error);
     });
-  };
+  }
 
   async tobase64Handler(files: any) {
     const filePathsPromises: any = [];
@@ -175,7 +177,7 @@ export class MyAdsComponent implements OnInit {
       filePathsPromises.push(this.toBase64(file));
     });
     const filePaths = await Promise.all(filePathsPromises);
-    const mappedFiles = filePaths.map((base64File) => (base64File));
+    const mappedFiles = filePaths.map((base64File) => base64File);
     return mappedFiles;
   }
 

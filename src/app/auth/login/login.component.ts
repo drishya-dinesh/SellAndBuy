@@ -52,8 +52,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private fireBaseService: FireBaseService,
     private message: NzMessageService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     const isLoggedIn = sessionStorage.getItem('isLoggedIn');
@@ -66,18 +65,21 @@ export class LoginComponent implements OnInit {
     this.loginErrorMessage = this.validateLogin().message;
     if (!this.loginErrorMessage) {
       this.loginLoading = true;
-      this.fireBaseService.checkUserExists(COLLECTIONS.USERS, this.loginObject).subscribe((val: any) => {
-        this.loginLoading = false;
-        if (val.length > 0) {
-          const user = val[0]
-          sessionStorage.setItem('userName', user.fullName);
-          sessionStorage.setItem('userId', user.email);
-          sessionStorage.setItem('isLoggedIn', 'true');
-          this.router.navigate(['home']);
-        } else {
-          this.loginErrorMessage = 'Login failed, Please check your Email and password.'
-        }
-      })
+      this.fireBaseService
+        .checkUserExists(COLLECTIONS.USERS, this.loginObject)
+        .subscribe((val: any) => {
+          this.loginLoading = false;
+          if (val.length > 0) {
+            const user = val[0];
+            sessionStorage.setItem('userName', user.fullName);
+            sessionStorage.setItem('userId', user.email);
+            sessionStorage.setItem('isLoggedIn', 'true');
+            this.router.navigate(['home']);
+          } else {
+            this.loginErrorMessage =
+              'Login failed, Please check your Email and password.';
+          }
+        });
     }
   }
 
@@ -85,12 +87,12 @@ export class LoginComponent implements OnInit {
     // this.pageType = 'login';
     this.validateRegister();
     let validFlag = false;
-    Object.keys(this.registerObject).forEach(item => {
+    Object.keys(this.registerObject).forEach((item) => {
       // @ts-ignore
       if (this.registerObject[item]['errorMessage']) {
         validFlag = true;
       }
-    })
+    });
     if (!validFlag) {
       let userObj: any = {};
       userObj['fullName'] = this.registerObject.fullName.value;
@@ -98,22 +100,36 @@ export class LoginComponent implements OnInit {
       userObj['password'] = this.registerObject.password.value;
       userObj['phone'] = this.registerObject.phone.value;
       this.registerLoading = true;
-      this.fireBaseService.checkEmailExists(COLLECTIONS.USERS, this.registerObject.email.value).subscribe((val: any) => {
-        if (val.length > 0) {
-          this.message.create('error', 'User already exists, Please try login.');
-          this.registerLoading = false;
-        } else {
-          this.fireBaseService.addUsers(COLLECTIONS.USERS, userObj).then((val: any) => {
-            this.message.create('success', 'Registration Successful, Please Login to continue.');
-            this.backToLogin();
-          }).catch(() => {
-            this.message.create('error', 'Registration Failed, Please Try again later.');
-          }).finally(() => {
+      this.fireBaseService
+        .checkEmailExists(COLLECTIONS.USERS, this.registerObject.email.value)
+        .subscribe((val: any) => {
+          if (val.length > 0) {
+            this.message.create(
+              'error',
+              'User already exists, Please try login.'
+            );
             this.registerLoading = false;
-          })
-        }
-      })
-
+          } else {
+            this.fireBaseService
+              .addUsers(COLLECTIONS.USERS, userObj)
+              .then((val: any) => {
+                this.message.create(
+                  'success',
+                  'Registration Successful, Please Login to continue.'
+                );
+                this.backToLogin();
+              })
+              .catch(() => {
+                this.message.create(
+                  'error',
+                  'Registration Failed, Please Try again later.'
+                );
+              })
+              .finally(() => {
+                this.registerLoading = false;
+              });
+          }
+        });
     }
   }
 
@@ -168,7 +184,7 @@ export class LoginComponent implements OnInit {
       this.registerObject.errorFlag = false;
     }
 
-    if (this.registerObject.phone.value.length !== 11) {
+    if (this.registerObject.phone.value.length !== 10) {
       this.registerObject.phone.errorMessage =
         'Please enter valid phone number';
       this.registerObject.errorFlag = true;
@@ -195,7 +211,7 @@ export class LoginComponent implements OnInit {
     } else if (
       !this.registerObject.password.errorMessage &&
       this.registerObject.password.value !==
-      this.registerObject.confirmPassword.value
+        this.registerObject.confirmPassword.value
     ) {
       this.registerObject.confirmPassword.errorMessage = 'Password mismatch';
       this.registerObject.errorFlag = true;

@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class FireBaseService {
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private firestore: AngularFirestore) {}
 
   fetchAllAds(collectionName: string) {
     return this.firestore
@@ -76,10 +76,7 @@ export class FireBaseService {
   }
 
   deleteAd(collectionName: string, adId: string) {
-    return this.firestore
-      .collection(collectionName)
-      .doc(adId)
-      .delete();
+    return this.firestore.collection(collectionName).doc(adId).delete();
   }
 
   addUsers(collectionName: string, user: any) {
@@ -106,8 +103,11 @@ export class FireBaseService {
 
   checkUserExists(collectionName: string, user: any) {
     return this.firestore
-      .collection(collectionName, (ref) => ref.where('email', '==', user.email)
-        .where('password', '==', user.password))
+      .collection(collectionName, (ref) =>
+        ref
+          .where('email', '==', user.email)
+          .where('password', '==', user.password)
+      )
       .get()
       .pipe(
         map((snapshot: any) => {
@@ -125,7 +125,8 @@ export class FireBaseService {
 
   allChats(collectionName: string, id: string, key: string) {
     return this.firestore
-      .collection(collectionName, ref => ref.where(key, '==', id)).get()
+      .collection(collectionName, (ref) => ref.where(key, '==', id))
+      .get()
       .pipe(
         map((snapshot: any) => {
           let items: any = [];
@@ -140,12 +141,11 @@ export class FireBaseService {
       );
   }
 
-
   checkChatExists(collectionName: string, ad: any, userId: string) {
     return this.firestore
-      .collection(collectionName, (ref) => ref
-        .where('adId', '==', ad.id)
-        .where('buyerId', '==', userId))
+      .collection(collectionName, (ref) =>
+        ref.where('adId', '==', ad.id).where('buyerId', '==', userId)
+      )
       .get()
       .pipe(
         map((snapshot: any) => {
@@ -171,5 +171,4 @@ export class FireBaseService {
       .doc(chatId)
       .update({ chats: chats });
   }
-
 }
