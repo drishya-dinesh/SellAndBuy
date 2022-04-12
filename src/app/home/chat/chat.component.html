@@ -1,4 +1,4 @@
-<div class="row chat-container">
+<div *ngIf="!chatLoading" class="row chat-container">
     <div class="col-sm-6 col-md-4 col-xl-4">
         <div class="people">
             <div class="header">
@@ -52,4 +52,7 @@
             </ng-container>
         </div>
     </div>
+</div>
+<div *ngIf="chatLoading" class="align-items-center d-flex justify-content-center" style="height: 70vh;">
+    <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
 </div>

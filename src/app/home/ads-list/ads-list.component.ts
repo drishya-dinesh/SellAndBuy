@@ -103,13 +103,27 @@ export class AdsListComponent implements OnInit {
   }
   updateAdClick(ad: any) {
     this.isVisible = true;
+    this.postAd = {...ad};
   }
   openAdDetails(ad: any) {
     this.selectedAd = ad;
     this.imageIndex = 0;
     this.showAdDetails = true;
   }
-  handleOk() {}
+
+  handleOk() {
+    this.postLoading = true;
+    const id = this.selectedAd.id;
+    this.fireBaseService.updateAd(COLLECTIONS.ALL_ADS,id, this.postAd ).then(()=>{
+      this.message.create('success', 'Ad Updated Successfully');
+      this.isVisible = false;
+      this.selectedAd = {...this.postAd}
+    }).catch(()=>{
+      this.message.create('error', 'Couldn\'t update ad.');
+    }).finally(()=>{
+      this.postLoading = false;
+    })
+  }
 
   closeAdDetails() {
     this.showAdDetails = false;

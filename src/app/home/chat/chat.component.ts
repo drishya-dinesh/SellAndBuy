@@ -19,18 +19,21 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   userId: any = '';
 
+  chatLoading = false;
+
   constructor(private firebaseService: FireBaseService) {}
 
   ngOnInit(): void {
     this.userId = sessionStorage.getItem('userId');
     this.selectedChatId = sessionStorage.getItem('selectedChatId');
-    this.fetchChat();
+    this.fetchChat(true);
     this.interval = setInterval(() => {
-      this.fetchChat();
+      this.fetchChat(false);
     }, 5000);
   }
-  fetchChat() {
+  fetchChat(getIndex:boolean) {
     let chat: any = [];
+    this.chatLoading = getIndex ? true:false;
     this.firebaseService
       .allChats(COLLECTIONS.CHATS, this.userId, 'buyerId')
       .subscribe((val: any) => {
@@ -38,15 +41,19 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.firebaseService
           .allChats(COLLECTIONS.CHATS, this.userId, 'sellerId')
           .subscribe((val: any) => {
-            this.chatList = chat.concat(val);
-            this.getSelectedChatIndex();
+            chat = chat.concat(val);
+            this.chatList = chat.reverse();
+            this.chatLoading = false;
+            if(getIndex){
+              this.getSelectedChatIndex();
+            }
           });
       });
   }
 
   getSelectedChatIndex() {
     this.selectedChatIndex = this.chatList.findIndex(
-      (x: any) => (x.adId = this.selectedChatId)
+      (x: any) => (x.adId === this.selectedChatId)
     );
     this.selectedChatIndex =
       this.selectedChatIndex === -1 && this.chatList.length > 0
@@ -77,6 +84,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       });
   }
   ngOnDestroy(): void {
+    sessionStorage.removeItem('selectedChatId');
     if (this.interval) {
       clearInterval(this.interval);
     }

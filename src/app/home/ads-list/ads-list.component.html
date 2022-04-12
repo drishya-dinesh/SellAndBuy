@@ -85,15 +85,15 @@
                                 </div>
                             </button>
                         </div>
-                        <div *ngIf="selectedAd.sellerId === userId" class="col-12">
+                        <div *ngIf="selectedAd.sellerId === userId" class="col-6">
                             <button nz-button nzType="primary" nzSize="large" (click)="updateAdClick(selectedAd)">
                                 <div class="d-flex justify-content-center align-items-center">
                                     Update Ad &nbsp;
-                                    <i nz-icon nzType="sync" nzTheme="outline"></i>
+                                    <i nz-icon nzType="edit" nzTheme="outline"></i>
                                 </div>
                             </button>
                         </div>
-                        <div *ngIf="selectedAd.sellerId === userId" class="col-12 delete">
+                        <div *ngIf="selectedAd.sellerId === userId" class="col-6">
                             <button nz-button nzType="primary" nzSize="large" nzDanger (click)="deleteAdClick()">
                                 <div class="d-flex justify-content-center align-items-center">
                                     Delete Ad. &nbsp;
@@ -122,6 +122,7 @@
             Delete</button>
     </ng-template>
 </nz-modal>
+
 <nz-modal [(nzVisible)]="isVisible" nzTitle="Update Your Ad." (nzOnCancel)="handleCancel()" (nzOnOk)="updateAdClick(ads)" [nzStyle]="{width:'800px'}">
     <ng-container *nzModalContent>
         <div class="row ad-modal">

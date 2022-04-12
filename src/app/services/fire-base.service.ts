@@ -30,6 +30,13 @@ export class FireBaseService {
     return this.firestore.collection(collectionName).add(data);
   }
 
+  updateAd(collectionName: string,adId:string, data: any){
+       return this.firestore
+      .collection(collectionName)
+      .doc(adId)
+      .update(data);
+  }
+
   fetchMyAds(collectionName: string, userId: string) {
     return this.firestore
       .collection(collectionName, (ref) => ref.where('sellerId', '==', userId))
